@@ -13,14 +13,32 @@ def test_adaugare():
 def test_stergere():
     cheltuieli = []
     cheltuieli = adaugare(cheltuieli, 1, 3, 1000, '20.11.2021', 'canal')
+    cheltuieli = adaugare(cheltuieli, 2, 7, 2400, '20.11.2021', 'canal')
+    cheltuieli = adaugare(cheltuieli, 4, 9, 200, '21.12.2021', 'intretinere')
+
     cheltuieli = stergere(cheltuieli, 1)
+
+    assert len(cheltuieli) == 2
+
+    cheltuieli = stergere(cheltuieli, 3)
+
+    assert len(cheltuieli) == 2
+
+    cheltuieli = stergere(cheltuieli, 2)
+
+    assert len(cheltuieli) == 1
+
+    cheltuieli = stergere(cheltuieli, 4)
+
     assert len(cheltuieli) == 0
 
 def test_modificare():
     cheltuieli = []
     cheltuieli = adaugare(cheltuieli, 1, 3, 1000, '20.11.2021', 'canal')
+
     cheltuiala_noua = creeaza_cheltuiala(1, 4, 2000, '24.11.2021', 'intretinere')
     new_lst_cheltuieli = modificare(cheltuieli, cheltuiala_noua)
+
     assert len(new_lst_cheltuieli) == len(cheltuieli)
     assert cheltuiala_noua not in cheltuieli
     assert cheltuiala_noua in new_lst_cheltuieli
