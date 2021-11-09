@@ -1,5 +1,4 @@
 from Domain.cheltuiala import creeaza_cheltuiala, get_id
-from Logic.validari import validari_input
 
 def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip):
     """
@@ -12,7 +11,6 @@ def adaugare(lst_cheltuieli, id, nr_ap, suma, data, tip):
     :param tip: Tipul cheltuielii.
     :return: Lista de cheltuieli.
     """
-    id, nr_ap, suma, data, tip = validari_input(id, nr_ap, suma, data, tip)
     lst_cheltuieli.append(creeaza_cheltuiala(id, nr_ap, suma, data, tip))
     return lst_cheltuieli
 

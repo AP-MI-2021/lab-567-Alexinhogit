@@ -49,6 +49,14 @@ def get_data(cheltuiala):
     """
     return cheltuiala['data']
 
+def get_luna(data):
+    """
+    Returneaza luna cheltuielii
+    :param data: Data cheltuielii.
+    :return: Luna cheltuielii.
+    """
+    return data[3:5]
+
 def get_tip(cheltuiala):
     """
     Returneaza tipul cheltuielii.

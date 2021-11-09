@@ -4,7 +4,9 @@ from Logic.Sterge_Cheltuieli_Apartament import stergere_cheltuieli_apartament
 from Logic.Adunare_Valoare import add_suma_for_cheltuieli_in_data
 from Logic.Max_Tip_Cheltuieli import max_suma_for_tip_cheltuiala
 from Logic.Ordonare_Cheltuieli import ordonare_cheltuieli_descrescator
+from Logic.Sume_Lunare import sume_lunare
 from Logic.validari import validare_nr_ap, validare_add_suma_for_cheltuieli_in_data
+import copy
 
 
 def afisare_cheltuieli(lst_cheltuieli):
@@ -40,7 +42,17 @@ def meniu_max_suma_for_tip_cheltuiala(lst_cheltuieli):
     print(f"canal: {canal}")
     print(f"alte cheltuieli: {alte_cheltuieli}")
 
+def meniu_sume_lunare(lst_cheltuieli):
+    sume = sume_lunare(lst_cheltuieli)
+    for luna in sume:
+        print("Luna " + luna + ":")
+        for apartament in sume[luna]:
+            print("Apartamentul " + str(apartament) + ": " + str(sume[luna][apartament]))
+
 def run_menu(lst_cheltuieli):
+    istoric = [[]]
+    index = 0
+
     while True:
         print("""
         1. Adaugare cheltuiala.
@@ -50,7 +62,10 @@ def run_menu(lst_cheltuieli):
         5. Adunarea unei valori la toate cheltuielile dintr-o data citita.
         6. Determinarea celei mai mari cheltuieli pentru fiecare tip de cheltuiala.
         7. Ordonarea cheltuielilor descrescator după suma.
+        8. Afisarea sumelor lunare pentru apartament.
         a. Afisarea tuturor cheltuielilor.
+        u. Undo.
+        r. Redo.
         x. Iesire """)
 
         cmd = input("Comanda: ")
@@ -68,9 +83,27 @@ def run_menu(lst_cheltuieli):
             meniu_max_suma_for_tip_cheltuiala(lst_cheltuieli)
         elif cmd == '7':
             print(ordonare_cheltuieli_descrescator(lst_cheltuieli))
+        elif cmd == '8':
+            meniu_sume_lunare(lst_cheltuieli)
+
+        elif cmd == 'u':
+            if index > 0:
+                index -= 1
+            lst_cheltuieli = istoric[index]
+        elif cmd == 'r':
+            if index < len(istoric) - 1:
+                index += 1
+            lst_cheltuieli = istoric[index]
+
         elif cmd == 'a':
             afisare_cheltuieli(lst_cheltuieli)
         elif cmd == 'x':
             break
         else:
             print("Comanda invalida.")
+
+        if cmd in ['1', '2', '3', '4', '5']:
+            istoric = istoric[:index+1]
+            istoric.append(copy.deepcopy(lst_cheltuieli))
+            index = len(istoric) - 1
+            lst_cheltuieli = istoric[-1]
